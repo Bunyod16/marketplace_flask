@@ -20,9 +20,13 @@ class User(db.Model, UserMixin):
 			return f'{str(self.budget)[:-3]},{str(self.budget)[-3:]}$'
 		else:
 			return f'{self.budget}$'
+
 	@property
 	def password(self):
 		return self.password()
+	
+	def can_purchase(self, item_obj):
+		return (self.budget >= item_obj.price)
 
 	@password.setter
 	def password(self, plain_text_password):

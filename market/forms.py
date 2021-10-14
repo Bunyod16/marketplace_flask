@@ -15,6 +15,9 @@ class RegisterForm(FlaskForm):
 		email_address = User.query.filter_by(email_address=email_address_to_check.data).first()
 		if email_address:
 			raise ValidationError('Email address already used')
+	
+	def can_purchase(self, item_object):
+		return self.budget >= item_object.price
 
 	username = StringField(label='User Name:', validators=[Length(min=2,max=30), DataRequired()])
 	email_address = StringField(label='Email:', validators=[Email(), DataRequired()])
